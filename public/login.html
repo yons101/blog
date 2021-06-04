@@ -1,0 +1,30 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" />
+
+</head>
+
+<body class="container position-relative">
+  <form class="form-signin w-50 position-absolute top-50 start-50 translate-middle" onsubmit="login(event)">
+    <h1 class="text-center">Sign in</h1>
+    <label for="inputUsername">Username</label>
+    <input value="Lesley_Waelchi89" type="text" id="inputUsername" class="my-3 form-control" placeholder="Username"
+      required autofocus>
+    <label for="inputPassword">Password</label>
+    <input value="PpOMB5mW6a8mjl1" type="password" id="inputPassword" class="my-3 form-control" placeholder="Password"
+      required>
+    <div class="text-center">
+      <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+    </div>
+  </form>
+</body>
+
+<!-- No need for jQuery in bootstrap v5 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="./javascripts/auth.js"></script>
+</html>

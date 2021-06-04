@@ -1,4 +1,5 @@
 <html>
+
 <head>
   <title>Express</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
@@ -6,8 +7,16 @@
 </head>
 
 <body>
-
+  <nav class="navbar navbar-dark bg-dark mb-5">
+    <div class="container d-flex justify-content-between">
+      <span class="navbar-brand h1">Blog</span>
+      <a class="text-white" href="#" onclick="logout(event)">Logout</a>
+    </div>
+  </nav>
   <div class="container">
+    <a class="btn btn-primary" onclick="addUser(event)">Add A user</a>
+
+
     <table class="table table-striped mt-4">
       <thead>
         <tr>
@@ -31,5 +40,7 @@
 <!-- No need for jQuery in bootstrap v5 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js"></script>
 <script src="./javascripts/main.js"></script>
+<script src="./javascripts/auth.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>
