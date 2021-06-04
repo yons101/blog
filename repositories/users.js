@@ -1,8 +1,18 @@
 const { User } = require("../models");
 module.exports = {
+  login(user) {
+    return User.findOne({
+      where: {
+        username: user.username,
+        password: user.password,
+      },
+    });
+  },
+
   getAllUsers() {
     return User.findAll();
   },
+  // méthodes à implémenter
   getUsers(offset, limit) {
     return User.findAll({ offset, limit });
   },
