@@ -1,13 +1,35 @@
 <html>
-
 <head>
   <title>Express</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" />
 </head>
 
 <body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
+
+  <div class="container">
+    <table class="table table-striped mt-4">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">username</th>
+          <th scope="col">email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="users">
+
+      </tbody>
+    </table>
+    <div class="position-relative mt-5">
+      <ul class="pagination position-absolute top-50 start-50 translate-middle" id="pagination">
+      </ul>
+    </div>
+  </div>
 </body>
+
+<!-- No need for jQuery in bootstrap v5 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js"></script>
+<script src="./javascripts/main.js"></script>
 
 </html>
