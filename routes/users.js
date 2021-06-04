@@ -1,5 +1,37 @@
 const router = require("express").Router();
 const usersRepo = require("../repositories/users");
+const { authenticateJWT, checkAuthJWT } = require("../auth");
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+
+// Login
+router.post("/login", async function (req, res, next) {
+  const login = await usersRepo.login(req.body);
+  if (login) {
+    const accessToken = jwt.sign(
+      login.toJSON(),
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "24h" }
+    );
+    res.json({ accessToken });
+    return;
+  }
+  res.json({ error: "Wrong username or password" });
+});
+// check auth, for frontend
+router.post("/check-auth", async function (req, res, next) {
+  let token = req.body.token;
+  if (token == null) {
+    res.status(401);
+    res.json({ error: "Unauthorized" });
+    return;
+  }
+  try {
+    res.json(jwt.verify(token, process.env.ACCESS_TOKEN_SECRET));
+  } catch (error) {
+    res.json({ error: "Unauthorized" });
+  }
+});
 
 // GET all users.
 router.get("/", async function (req, res, next) {
