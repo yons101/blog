@@ -14,7 +14,7 @@ module.exports = {
     });
   },
   getComment(id) {
-    return Comment.findAll({
+    return Comment.findOne({
       where: {
         id,
       },

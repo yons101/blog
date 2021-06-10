@@ -10,7 +10,7 @@ module.exports = {
     return Article.findAll({ offset, limit });
   },
   getArticle(id) {
-    return Article.findAll({
+    return Article.findOne({
       where: {
         id,
       },

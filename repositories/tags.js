@@ -7,7 +7,7 @@ module.exports = {
     return Tag.findAll({ offset, limit });
   },
   getTag(id) {
-    return Tag.findAll({
+    return Tag.findOne({
       where: {
         id,
       },

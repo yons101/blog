@@ -38,7 +38,7 @@ module.exports = {
     });
   },
   getUser(id) {
-    return User.findAll({
+    return User.findOne({
       where: {
         id,
       },
