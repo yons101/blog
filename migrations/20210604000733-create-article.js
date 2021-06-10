@@ -14,6 +14,9 @@ module.exports = {
       content: {
         type: Sequelize.TEXT,
       },
+      image: {
+        type: Sequelize.TEXT,
+      },
       published: {
         type: Sequelize.BOOLEAN,
       },

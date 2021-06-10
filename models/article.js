@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       content: DataTypes.TEXT,
+      image: DataTypes.TEXT,
       published: DataTypes.BOOLEAN,
     },
     {
