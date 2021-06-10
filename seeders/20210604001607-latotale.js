@@ -37,7 +37,7 @@ module.exports = {
           articles.push({
             title: faker.lorem.sentence(),
             content: faker.lorem.paragraphs(),
-            image: `https://picsum.photos/500/500?random=${faker.random.number()}`,
+            image: `https://picsum.photos/500/500?random=${faker.datatype.number()}`,
             published: faker.datatype.boolean(),
             createdAt: nextDay,
             updatedAt: nextDay,
