@@ -60,7 +60,7 @@ module.exports = {
         id,
       },
     });
-    return User.findOne({
+    return User.findAll({
       where: {
         id,
       },

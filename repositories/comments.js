@@ -29,7 +29,7 @@ module.exports = {
         id,
       },
     });
-    return Comment.findOne({
+    return Comment.findAll({
       where: {
         id,
       },

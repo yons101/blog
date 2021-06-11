@@ -22,7 +22,7 @@ module.exports = {
         id,
       },
     });
-    return Tag.findOne({
+    return Tag.findAll({
       where: {
         id,
       },
