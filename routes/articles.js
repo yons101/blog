@@ -39,7 +39,9 @@ router.put("/:id", async function (req, res, next) {
   const articles = await articlesRepo.getAllArticles();
   articles.forEach((article) => {
     if (article.title === req.body.title && article.id != req.params.id) {
+      res.status(409);
       res.json({ error: "Title must be unique" });
+      return;
     }
   });
   const article = await articlesRepo.updateArticle(req.body, req.params.id);
