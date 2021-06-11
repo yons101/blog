@@ -51,6 +51,7 @@ router.put("/:id", async function (req, res, next) {
   if (articleIsFound) {
     res.json(await commentsRepo.updateComment(req.body, req.params.id));
   }
+  res.status(404);
   res.json({ error: `No article with id ${req.body.ArticleId}!` });
 });
 // Delete comment with id
@@ -66,7 +67,9 @@ router.delete("/:id", async function (req, res, next) {
   if (isFound) {
     commentsRepo.deleteComment(parseInt(req.params.id));
     res.json({ message: `Comment with id ${req.params.id} has been deleted!` });
+    return;
   }
+  res.status(404);
   res.json({ error: `No comment with id ${req.params.id}!` });
 });
 

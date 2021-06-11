@@ -43,9 +43,12 @@ router.put("/:id", async function (req, res, next) {
     }
   });
   const article = await articlesRepo.updateArticle(req.body, req.params.id);
-  article.length > 0
-    ? res.json(article)
-    : res.json({ error: "Article not found" });
+  if (article.length > 0) {
+    res.json(article);
+    return;
+  }
+  res.status(404);
+  res.json({ error: "Article not found" });
 });
 // Delete article with id
 router.delete("/:id", async function (req, res, next) {
@@ -60,7 +63,9 @@ router.delete("/:id", async function (req, res, next) {
   if (isFound) {
     articlesRepo.deleteArticle(parseInt(req.params.id));
     res.json({ message: `Article with id ${req.params.id} has been deleted!` });
+    return;
   }
+  res.status(404);
   res.json({ error: `No article with id ${req.params.id}!` });
 });
 

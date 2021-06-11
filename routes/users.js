@@ -86,10 +86,14 @@ router.put("/:id", async function (req, res, next) {
   const users = await usersRepo.getAllUsers();
   users.forEach((user) => {
     if (user.username === req.body.username && user.id != req.params.id) {
+      res.status(409);
       res.json({ error: "Username Taken" });
+      return;
     }
     if (user.email === req.body.email && user.id != req.params.id) {
+      res.status(409);
       res.json({ error: "Email Taken" });
+      return;
     }
   });
   res.json(await usersRepo.updateUser(req.body, req.params.id));
@@ -107,7 +111,9 @@ router.delete("/:id", async function (req, res, next) {
   if (isFound) {
     usersRepo.deleteUser(parseInt(req.params.id));
     res.json({ message: `User with id ${req.params.id} has been deleted!` });
+    return;
   }
+  res.status(404);
   res.json({ error: `No user with id ${req.params.id}!` });
 });
 

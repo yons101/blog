@@ -27,7 +27,9 @@ router.post("/", async function (req, res, next) {
 router.put("/:id", async function (req, res, next) {
   const tag = await tagsRepo.getTag(req.params.id);
   if (tag.length == 0) {
+    res.status(404);
     res.json({ error: `No tag with id ${req.params.id}!` });
+    return;
   }
   res.json(await tagsRepo.updateTag(req.body, req.params.id));
 });
@@ -44,7 +46,9 @@ router.delete("/:id", async function (req, res, next) {
   if (isFound) {
     tagsRepo.deleteTag(parseInt(req.params.id));
     res.json({ message: `Tag with id ${req.params.id} has been deleted!` });
+    return;
   }
+  res.status(404);
   res.json({ error: `No tag with id ${req.params.id}!` });
 });
 
