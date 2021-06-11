@@ -5,6 +5,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 
 export default function Login() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState({ state: false, message: "" });
   const [error, setError] = useState({ state: false, message: "" });
@@ -15,7 +16,9 @@ export default function Login() {
       method: "POST",
       body: JSON.stringify({
         username,
+        email,
         password,
+        role: "guest",
       }),
       headers: {
         "Content-Type": "application/json",
@@ -52,12 +55,12 @@ export default function Login() {
   return (
     <div>
       <Head>
-        <title>Login</title>
+        <title>Sign Up</title>
       </Head>
       <Header />
       <div className="container d-flex justify-content-center ">
         <form className="w-75 mt-10" onSubmit={signup}>
-          <h1 className="text-center">Sign in</h1>
+          <h1 className="text-center">Sign Up</h1>
           <label htmlFor="inputUsername">Username/Email</label>
           <input
             value={username}
@@ -68,6 +71,16 @@ export default function Login() {
             placeholder="Username/Email"
             required
             autoFocus
+          />
+          <label htmlFor="inputEmail">Email</label>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            id="inputEmail"
+            className="my-3 form-control"
+            placeholder="Email"
+            required
           />
           <label htmlFor="inputPassword">Password</label>
           <input
@@ -81,9 +94,9 @@ export default function Login() {
           />
           <div className="text-center d-flex justify-content-around align-items-center">
             <button className="btn btn-lg btn-primary" type="submit">
-              Sign in
+              Sign up
             </button>
-            <a href="/singup">Create account</a>
+            <a href="/login">Login</a>
           </div>
         </form>
       </div>
