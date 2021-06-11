@@ -56,7 +56,7 @@ export default function edit({ article }) {
         <title>Update article</title>
       </Head>
       <Header />
-      <article className="container">
+      <div className="container">
         <header className="mb-4">
           <h1 className="fw-bolder mb-1">Update article</h1>
         </header>
@@ -88,7 +88,7 @@ export default function edit({ article }) {
             </button>
           </form>
         </section>
-      </article>
+      </div>
       {success.state && (
         <SweetAlert success title="Success!" onConfirm={reset}>
           {success.message}

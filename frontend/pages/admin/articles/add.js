@@ -58,7 +58,7 @@ export default function add() {
         <title>Add an article</title>
       </Head>
       <Header />
-      <article className="container">
+      <div className="container">
         <header className="mb-4">
           <h1 className="fw-bolder mb-1">Add an article</h1>
         </header>
@@ -90,7 +90,7 @@ export default function add() {
             </button>
           </form>
         </section>
-      </article>
+      </div>
       {success.state && (
         <SweetAlert success title="Success!" onConfirm={reset}>
           {success.message}

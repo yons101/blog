@@ -45,7 +45,7 @@ export default function index() {
         <title>All Articles</title>
       </Head>
       <Header />
-      <article className="container">
+      <div className="container">
         <header className="mb-4 d-flex justify-content-between align-items-center">
           <h1 className="fw-bolder mb-1">All Articles</h1>
           <a className="btn btn-primary" href="/admin/articles/add">
@@ -118,7 +118,7 @@ export default function index() {
             />
           </div>
         </section>
-      </article>
+      </div>
 
       <SweetAlert
         show={deleteAlert.show}
