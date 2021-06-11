@@ -1,15 +1,20 @@
 import { useState } from "react";
 import Head from "next/head";
 import Header from "@components/Header";
+import { checkAuth } from "@utils/auth";
 
 import SweetAlert from "react-bootstrap-sweetalert";
 
 export default function add() {
+  const [authorized, setAuthorized] = useState(false);
   const [name, setName] = useState("");
   const [success, setSuccess] = useState({ state: false, message: "" });
   const [error, setError] = useState({ state: false, message: "" });
-
+  useEffect(() => {
+    checkAuth(setAuthorized);
+  }, []);
   const addTag = async (e) => {
+    let token = localStorage.getItem("token");
     let status;
     e.preventDefault();
     await fetch(`http://localhost:3000/tags`, {
@@ -19,7 +24,7 @@ export default function add() {
       }),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {

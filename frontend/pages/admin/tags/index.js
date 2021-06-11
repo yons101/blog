@@ -4,8 +4,10 @@ import Header from "@components/Header";
 import SweetAlert from "react-bootstrap-sweetalert";
 import dayjs from "dayjs";
 import ReactPaginate from "react-paginate";
+import { checkAuth } from "@utils/auth";
 
 export default function index() {
+  const [authorized, setAuthorized] = useState(false);
   const [tags, setTagss] = useState([]);
   const [deleteAlert, setDeleteAlert] = useState({ show: false, id: "" });
   const [currentPage, setCurrentPage] = useState(0);
@@ -15,14 +17,16 @@ export default function index() {
     setTagss(tags);
   };
   useEffect(() => {
+    checkAuth(setAuthorized);
     fetchTagss();
   }, []);
   const deleteTags = async (id) => {
+    let token = localStorage.getItem("token");
     await fetch(`http://localhost:3000/tags/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())

@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "@components/Header";
 import SweetAlert from "react-bootstrap-sweetalert";
+import faker from "faker";
+import { checkAuth } from "@utils/auth";
 
 export default function add() {
+  const [authorized, setAuthorized] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [success, setSuccess] = useState({ state: false, message: "" });
   const [error, setError] = useState({ state: false, message: "" });
 
+  useEffect(() => {
+    checkAuth(setAuthorized);
+  }, []);
   const addArticle = async (e) => {
+    let token = localStorage.getItem("token");
+    let UserId = localStorage.getItem("UserId");
     let status;
     e.preventDefault();
-    console.log(title, content);
     await fetch(`http://localhost:3000/articles`, {
       method: "POST",
       body: JSON.stringify({
@@ -20,11 +27,11 @@ export default function add() {
         content,
         image: `https://picsum.photos/500/500?random=${faker.datatype.number()}`,
         published: 0,
-        UserId: 1,
+        UserId,
       }),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -32,6 +39,7 @@ export default function add() {
         return res.json();
       })
       .then((data) => {
+        console.log(data);
         if (status === 200) {
           setSuccess({
             state: true,
@@ -57,39 +65,42 @@ export default function add() {
         <title>Add an article</title>
       </Head>
       <Header />
-      <div className="container">
-        <header className="mb-4">
-          <h1 className="fw-bolder mb-1">Add an article</h1>
-        </header>
-        <section className="mt-3 mb-5">
-          <form>
-            <div className="form-group">
-              Title
-              <input
-                type="text"
-                className="form-control"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="form-group my-4">
-              Content
-              <textarea
-                className="form-control"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={addArticle}
-            >
-              Add
-            </button>
-          </form>
-        </section>
-      </div>
+      {authorized && (
+        <div className="container">
+          <header className="mb-4">
+            <h1 className="fw-bolder mb-1">Add an article</h1>
+          </header>
+          <section className="mt-3 mb-5">
+            <form>
+              <div className="form-group">
+                Title
+                <input
+                  type="text"
+                  className="form-control"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div className="form-group my-4">
+                Content
+                <textarea
+                  className="form-control"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={addArticle}
+              >
+                Add
+              </button>
+            </form>
+          </section>
+        </div>
+      )}
+
       {success.state && (
         <SweetAlert success title="Success!" onConfirm={reset}>
           {success.message}

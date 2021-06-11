@@ -8,6 +8,22 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState({ state: false, message: "" });
   const [error, setError] = useState({ state: false, message: "" });
+  useEffect(async () => {
+    let token = localStorage.getItem("token");
+    await fetch(`http://localhost:3000/users/check-auth`, {
+      method: "POST",
+      body: JSON.stringify({
+        token,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+        window.location.href = "/";
+      }
+    });
+  });
   const login = async (e) => {
     let status;
     e.preventDefault();

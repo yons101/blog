@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const usersRepo = require("../repositories/users");
-const { authenticateJWT, checkAuthJWT } = require("../auth");
+const { authJWT } = require("../auth");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
@@ -71,6 +71,7 @@ router.post("/check-auth", async function (req, res, next) {
   try {
     res.json(jwt.verify(token, process.env.ACCESS_TOKEN_SECRET));
   } catch (error) {
+    res.status(401);
     res.json({ error: "Unauthorized" });
   }
 });
@@ -109,7 +110,7 @@ router.get("/:id", async function (req, res, next) {
   res.json(await usersRepo.getUser(req.params.id));
 });
 // Update user with id
-router.put("/:id", async function (req, res, next) {
+router.put("/:id", authJWT, async function (req, res, next) {
   const users = await usersRepo.getAllUsers();
   users.forEach((user) => {
     if (user.username === req.body.username && user.id != req.params.id) {
@@ -126,7 +127,7 @@ router.put("/:id", async function (req, res, next) {
   res.json(await usersRepo.updateUser(req.body, req.params.id));
 });
 // Delete user with id
-router.delete("/:id", async function (req, res, next) {
+router.delete("/:id", authJWT, async function (req, res, next) {
   const users = await usersRepo.getAllUsers();
   let isFound = false;
   users.forEach((user) => {

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const commentsRepo = require("../repositories/comments");
 const articlesRepo = require("../repositories/articles");
+const { authJWT } = require("../auth");
 
 // GET all comments.
 router.get("/", async function (req, res, next) {
@@ -20,7 +21,7 @@ router.get("/:id", async function (req, res, next) {
   res.json(await commentsRepo.getComment(req.params.id));
 });
 // Add a comment
-router.post("/", async function (req, res, next) {
+router.post("/", authJWT, async function (req, res, next) {
   const articles = await articlesRepo.getAllArticles();
   let isFound = false;
   articles.forEach((article) => {
@@ -35,7 +36,7 @@ router.post("/", async function (req, res, next) {
   res.json({ error: `No article with id ${req.body.ArticleId}!` });
 });
 // Update comment with id
-router.put("/:id", async function (req, res, next) {
+router.put("/:id", authJWT, async function (req, res, next) {
   const articles = await articlesRepo.getAllArticles();
   const comment = await commentsRepo.getComment(req.params.id);
   if (comment.length == 0) {
@@ -55,7 +56,7 @@ router.put("/:id", async function (req, res, next) {
   res.json({ error: `No article with id ${req.body.ArticleId}!` });
 });
 // Delete comment with id
-router.delete("/:id", async function (req, res, next) {
+router.delete("/:id", authJWT, async function (req, res, next) {
   const comments = await commentsRepo.getAllComments();
   let isFound = false;
   comments.forEach((comment) => {

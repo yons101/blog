@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "@components/Header";
 import SweetAlert from "react-bootstrap-sweetalert";
+import { checkAuth } from "@utils/auth";
 
 export default function edit({ article }) {
+  const [authorized, setAuthorized] = useState(false);
   const [title, setTitle] = useState(article.title);
   const [content, setContent] = useState(article.content);
   const [success, setSuccess] = useState({ state: false, message: "" });
   const [error, setError] = useState({ state: false, message: "" });
 
+  useEffect(() => {
+    checkAuth(setAuthorized);
+  }, []);
+
   const updateArticle = async (e) => {
+    let token = localStorage.getItem("token");
     let status;
     e.preventDefault();
     console.log(title, content);
@@ -21,7 +28,7 @@ export default function edit({ article }) {
       }),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -55,39 +62,42 @@ export default function edit({ article }) {
         <title>Update article</title>
       </Head>
       <Header />
-      <div className="container">
-        <header className="mb-4">
-          <h1 className="fw-bolder mb-1">Update article</h1>
-        </header>
-        <section className="mt-3 mb-5">
-          <form>
-            <div className="form-group">
-              Title
-              <input
-                type="text"
-                className="form-control"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="form-group my-4">
-              Content
-              <textarea
-                className="form-control"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={updateArticle}
-            >
-              Update
-            </button>
-          </form>
-        </section>
-      </div>
+      {authorized && (
+        <div className="container">
+          <header className="mb-4">
+            <h1 className="fw-bolder mb-1">Update article</h1>
+          </header>
+          <section className="mt-3 mb-5">
+            <form>
+              <div className="form-group">
+                Title
+                <input
+                  type="text"
+                  className="form-control"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div className="form-group my-4">
+                Content
+                <textarea
+                  className="form-control"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={updateArticle}
+              >
+                Update
+              </button>
+            </form>
+          </section>
+        </div>
+      )}
+
       {success.state && (
         <SweetAlert success title="Success!" onConfirm={reset}>
           {success.message}

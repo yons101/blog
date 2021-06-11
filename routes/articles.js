@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const articlesRepo = require("../repositories/articles");
 const commentsRepo = require("../repositories/comments");
+const { authJWT } = require("../auth");
 
 // GET all articles.
 router.get("/", async function (req, res, next) {
@@ -24,7 +25,7 @@ router.get("/:id", async function (req, res, next) {
   res.json(await articlesRepo.getArticle(req.params.id));
 });
 // Add a article
-router.post("/", async function (req, res, next) {
+router.post("/", authJWT, async function (req, res, next) {
   try {
     res.json(await articlesRepo.addArticle(req.body));
   } catch (error) {
@@ -35,7 +36,7 @@ router.post("/", async function (req, res, next) {
   }
 });
 // Update article with id
-router.put("/:id", async function (req, res, next) {
+router.put("/:id", authJWT, async function (req, res, next) {
   const articles = await articlesRepo.getAllArticles();
   articles.forEach((article) => {
     if (article.title === req.body.title && article.id != req.params.id) {
@@ -53,7 +54,7 @@ router.put("/:id", async function (req, res, next) {
   res.json({ error: "Article not found" });
 });
 // Delete article with id
-router.delete("/:id", async function (req, res, next) {
+router.delete("/:id", authJWT, async function (req, res, next) {
   const articles = await articlesRepo.getAllArticles();
   let isFound = false;
   articles.forEach((article) => {
