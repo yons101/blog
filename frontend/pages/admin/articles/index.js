@@ -46,8 +46,11 @@ export default function index() {
       </Head>
       <Header />
       <article className="container">
-        <header className="mb-4">
+        <header className="mb-4 d-flex justify-content-between align-items-center">
           <h1 className="fw-bolder mb-1">All Articles</h1>
+          <a className="btn btn-primary" href="/admin/articles/add">
+            Add an article
+          </a>
         </header>
         <section className="mt-3 mb-5">
           <table className="table table-striped mt-4">
@@ -55,7 +58,7 @@ export default function index() {
               <tr>
                 <th scope="col">Id</th>
                 <th scope="col">title</th>
-                <th scope="col">updatedAt</th>
+                <th scope="col">Updated At</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
