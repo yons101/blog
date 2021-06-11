@@ -16,6 +16,7 @@ router.post("/login", async function (req, res, next) {
     res.json({ accessToken });
     return;
   }
+  res.status(401);
   res.json({ error: "Wrong username or password" });
 });
 // check auth, for frontend

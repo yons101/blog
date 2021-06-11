@@ -1,6 +1,14 @@
 const { User } = require("../models");
 module.exports = {
   login(user) {
+    if (user.username.includes("@")) {
+      return User.findOne({
+        where: {
+          email: user.username,
+          password: user.password,
+        },
+      });
+    }
     return User.findOne({
       where: {
         username: user.username,
