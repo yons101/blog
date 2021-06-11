@@ -9,7 +9,7 @@ export default function Article({ article, user }) {
         <title>{article.title}</title>
       </Head>
       <Header />
-      <article className="container">
+      <div className="container">
         <header className="mb-4">
           <h1 className="fw-bolder mb-1">{article.title}</h1>
           <div className="text-muted fst-italic mb-2">
@@ -33,7 +33,7 @@ export default function Article({ article, user }) {
         <section className="mt-3 mb-5">
           <p className="fs-5 mb-4">{article.content}</p>
         </section>
-      </article>
+      </div>
     </div>
   );
 }
