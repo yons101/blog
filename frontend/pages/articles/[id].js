@@ -2,7 +2,7 @@ import Head from "next/head";
 import Header from "@components/Header";
 import dayjs from "dayjs";
 
-export default function Home({ article, user }) {
+export default function Article({ article, user }) {
   return (
     <div>
       <Head>
