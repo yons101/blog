@@ -6,6 +6,7 @@ const ArticleList = ({ articles }) => {
       {articles.map((article) => {
         return (
           <ArticleCard
+            key={article.id}
             title={article.title}
             image={article.image}
             url="#"
