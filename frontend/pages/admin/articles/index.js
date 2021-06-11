@@ -4,6 +4,7 @@ import Header from "@components/Header";
 import faker from "faker";
 import SweetAlert from "react-bootstrap-sweetalert";
 import dayjs from "dayjs";
+import ReactPaginate from "react-paginate";
 
 export default function index() {
   const [articles, setArticles] = useState([]);
@@ -63,6 +64,18 @@ export default function index() {
               })}
             </tbody>
           </table>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={1}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={() => {}}
+            containerClassName={"pagination"}
+            activeClassName={"active"}
+          />
         </section>
       </article>
     </div>
