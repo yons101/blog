@@ -99,7 +99,7 @@ export default function Login() {
             <button className="btn btn-lg btn-primary" type="submit">
               Sign in
             </button>
-            <a href="/singup">Create account</a>
+            <a href="/signup">Create account</a>
           </div>
         </form>
       </div>
