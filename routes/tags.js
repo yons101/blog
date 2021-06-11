@@ -31,7 +31,7 @@ router.post("/", async function (req, res, next) {
   });
   if (isFound) {
     res.status(409);
-    res.json({ message: `Tag name must be unique` });
+    res.json({ error: `Tag name must be unique` });
     return;
   }
   res.json(await tagsRepo.addTag(req.body));
