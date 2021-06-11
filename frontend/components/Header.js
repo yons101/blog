@@ -1,38 +1,14 @@
-
 export const Header = () => {
   return (
     <header className="p-3 mb-3 border-bottom">
       <div className="container">
-        <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <div className="d-flex flex-wrap align-items-center justify-content-between ">
           <a
             href="/"
             className="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none"
           >
-            Logo
+            <b>Blog101</b>
           </a>
-
-          <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li>
-              <a href="#" className="nav-link px-2 link-secondary">
-                Overview
-              </a>
-            </li>
-            <li>
-              <a href="#" className="nav-link px-2 link-dark">
-                Inventory
-              </a>
-            </li>
-            <li>
-              <a href="#" className="nav-link px-2 link-dark">
-                Customers
-              </a>
-            </li>
-            <li>
-              <a href="#" className="nav-link px-2 link-dark">
-                Products
-              </a>
-            </li>
-          </ul>
 
           <div className="dropdown text-end">
             <a
@@ -43,7 +19,7 @@ export const Header = () => {
               aria-expanded="false"
             >
               <img
-                src="https://github.com/mdo.png"
+                src="/avatar.png"
                 alt="mdo"
                 width="32"
                 height="32"
@@ -55,26 +31,31 @@ export const Header = () => {
               aria-labelledby="dropdownUser1"
             >
               <li>
-                <a className="dropdown-item" href="#">
-                  New project...
+                <a className="dropdown-item" href="/admin/articles">
+                  Manage Articles
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Settings
+                <a className="dropdown-item" href="/admin/users">
+                  Manage Users
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Profile
+                <a className="dropdown-item" href="/admin/comments">
+                  Manage Comments
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="/admin/tags">
+                  Manage Tags
                 </a>
               </li>
               <li>
                 <hr className="dropdown-divider" />
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Sign out
+                <a className="dropdown-item" href="/logout">
+                  Log out
                 </a>
               </li>
             </ul>
