@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "@components/Header";
-import faker from "faker";
 import SweetAlert from "react-bootstrap-sweetalert";
-import dayjs from "dayjs";
 import ReactPaginate from "react-paginate";
 
 export default function index() {
