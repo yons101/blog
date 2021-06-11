@@ -25,7 +25,7 @@ module.exports = {
         id,
       },
     });
-    return Article.findAll({
+    return Article.findOne({
       where: {
         id,
       },
