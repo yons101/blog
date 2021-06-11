@@ -8,7 +8,7 @@ const ArticleList = ({ articles }) => {
           <ArticleCard
             title={article.title}
             image={article.image}
-            url={article.url}
+            url="#"
           />
         );
       })}
