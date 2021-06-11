@@ -59,6 +59,7 @@ module.exports = {
       },
     });
   },
+  //signup
   addUser(user) {
     return User.create(user);
   },

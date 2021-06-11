@@ -19,6 +19,47 @@ router.post("/login", async function (req, res, next) {
   res.status(401);
   res.json({ error: "Wrong username or password" });
 });
+// signup
+router.post(["/", "/signup"], async function (req, res, next) {
+  const users = await usersRepo.getAllUsers();
+  users.forEach((user) => {
+    if (user.username === req.body.username) {
+      res.status(409);
+      res.json({ error: "Username Taken" });
+      return;
+    }
+    if (user.email === req.body.email) {
+      res.status(409);
+      res.json({ error: "Email Taken" });
+      return;
+    }
+  });
+  if (!req.body.username) {
+    res.status(400);
+    res.json({ error: "Username is required" });
+    return;
+  }
+  if (!req.body.email) {
+    res.status(400);
+    res.json({ error: "Email is required" });
+    return;
+  }
+  if (!req.body.password) {
+    res.status(400);
+    res.json({ error: "Password is required" });
+    return;
+  }
+  const signup = await usersRepo.addUser(req.body);
+  if (signup) {
+    const accessToken = jwt.sign(
+      signup.toJSON(),
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "24h" }
+    );
+    res.json({ accessToken });
+    return;
+  }
+});
 // check auth, for frontend
 router.post("/check-auth", async function (req, res, next) {
   let token = req.body.token;
@@ -66,21 +107,6 @@ router.get("/guests", async function (req, res, next) {
 // GET user with an id
 router.get("/:id", async function (req, res, next) {
   res.json(await usersRepo.getUser(req.params.id));
-});
-// Add a user
-router.post("/", async function (req, res, next) {
-  const users = await usersRepo.getAllUsers();
-  users.forEach((user) => {
-    if (user.username === req.body.username) {
-      res.json({ error: "Username Taken" });
-      return;
-    }
-    if (user.email === req.body.email) {
-      res.json({ error: "Email Taken" });
-      return;
-    }
-  });
-  res.json(await usersRepo.addUser(req.body));
 });
 // Update user with id
 router.put("/:id", async function (req, res, next) {
