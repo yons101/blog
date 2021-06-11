@@ -13,8 +13,7 @@ export default function Article({ article, user }) {
         <header className="mb-4">
           <h1 className="fw-bolder mb-1">{article.title}</h1>
           <div className="text-muted fst-italic mb-2">
-            Posted on {dayjs(article.createdAt, "MM-DD-YYYY").toString()} by{" "}
-            {user.username}
+            Posted on {dayjs(article.createdAt).toString()} by {user.username}
           </div>
           <a
             className="badge bg-secondary text-decoration-none link-light"

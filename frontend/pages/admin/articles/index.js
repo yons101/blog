@@ -68,7 +68,7 @@ export default function index() {
                   <tr key={article.id}>
                     <th scope="row">{article.id}</th>
                     <td>{article.title}</td>
-                    <td>{dayjs(article.updatedAt, "MM-DD-YYYY").toString()}</td>
+                    <td>{dayjs(article.updatedAt).toString()}</td>
                     <td className="text-right d-flex flex-column flex-md-row justify-content-around">
                       <a
                         className="btn btn-primary"
