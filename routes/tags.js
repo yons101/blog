@@ -21,6 +21,19 @@ router.get("/:id", async function (req, res, next) {
 });
 // Add a tag
 router.post("/", async function (req, res, next) {
+  const tags = await tagsRepo.getAllTags();
+  let isFound = false;
+  tags.forEach((tag) => {
+    if (tag.name == req.body.name) {
+      isFound = true;
+      return;
+    }
+  });
+  if (isFound) {
+    res.status(409);
+    res.json({ message: `Tag name must be unique` });
+    return;
+  }
   res.json(await tagsRepo.addTag(req.body));
 });
 // Update tag with id
