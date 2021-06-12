@@ -27,11 +27,18 @@ router.get("/:id", async function (req, res, next) {
 // Add a article
 router.post("/", authJWT, async function (req, res, next) {
   try {
-    res.json(await articlesRepo.addArticle(req.body));
+    if (req.user.role === "admin" || req.user.role === "author") {
+      res.json(await articlesRepo.addArticle(req.body));
+    } else {
+      res.status(403); //conflict
+      res.json({ error: "Unauthorized" });
+      return;
+    }
   } catch (error) {
     if (error.errors[0].path == "title") {
       res.status(409); //conflict
       res.json({ error: "Title must be unique" });
+      return;
     }
   }
 });
@@ -45,13 +52,20 @@ router.put("/:id", authJWT, async function (req, res, next) {
       return;
     }
   });
-  const article = await articlesRepo.updateArticle(req.body, req.params.id);
-  if (article.length > 0) {
-    res.json(article);
+  if (req.user.role === "admin" || req.user.role === "author") {
+    const article = await articlesRepo.updateArticle(req.body, req.params.id);
+    if (article.length > 0) {
+      res.json(article);
+      return;
+    }
+    res.status(404);
+    res.json({ error: "Article not found" });
+    return;
+  } else {
+    res.status(403); //conflict
+    res.json({ error: "Unauthorized" });
     return;
   }
-  res.status(404);
-  res.json({ error: "Article not found" });
 });
 // Delete article with id
 router.delete("/:id", authJWT, async function (req, res, next) {
@@ -64,12 +78,22 @@ router.delete("/:id", authJWT, async function (req, res, next) {
     }
   });
   if (isFound) {
-    articlesRepo.deleteArticle(parseInt(req.params.id));
-    res.json({ message: `Article with id ${req.params.id} has been deleted!` });
+    if (req.user.role === "admin" || req.user.role === "author") {
+      articlesRepo.deleteArticle(parseInt(req.params.id));
+      res.json({
+        message: `Article with id ${req.params.id} has been deleted!`,
+      });
+      return;
+    } else {
+      res.status(403); //conflict
+      res.json({ error: "Unauthorized" });
+      return;
+    }
+  } else {
+    res.status(404);
+    res.json({ error: `No article with id ${req.params.id}!` });
     return;
   }
-  res.status(404);
-  res.json({ error: `No article with id ${req.params.id}!` });
 });
 
 module.exports = router;

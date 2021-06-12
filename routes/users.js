@@ -124,7 +124,13 @@ router.put("/:id", authJWT, async function (req, res, next) {
       return;
     }
   });
-  res.json(await usersRepo.updateUser(req.body, req.params.id));
+  if (req.user.role === "admin" || req.user.role === "author") {
+    res.json(await usersRepo.updateUser(req.body, req.params.id));
+  } else {
+    res.status(403); //conflict
+    res.json({ error: "Unauthorized" });
+    return;
+  }
 });
 // Delete user with id
 router.delete("/:id", authJWT, async function (req, res, next) {
@@ -137,9 +143,15 @@ router.delete("/:id", authJWT, async function (req, res, next) {
     }
   });
   if (isFound) {
-    usersRepo.deleteUser(parseInt(req.params.id));
-    res.json({ message: `User with id ${req.params.id} has been deleted!` });
-    return;
+    if (req.user.role === "admin" || req.user.role === "author") {
+      usersRepo.deleteUser(parseInt(req.params.id));
+      res.json({ message: `User with id ${req.params.id} has been deleted!` });
+      return;
+    } else {
+      res.status(403); //conflict
+      res.json({ error: "Unauthorized" });
+      return;
+    }
   }
   res.status(404);
   res.json({ error: `No user with id ${req.params.id}!` });

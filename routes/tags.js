@@ -35,7 +35,13 @@ router.post("/", authJWT, async function (req, res, next) {
     res.json({ error: `Tag name must be unique` });
     return;
   }
-  res.json(await tagsRepo.addTag(req.body));
+  if (req.user.role === "admin" || req.user.role === "author") {
+    res.json(await tagsRepo.addTag(req.body));
+  } else {
+    res.status(403); //conflict
+    res.json({ error: "Unauthorized" });
+    return;
+  }
 });
 // Update tag with id
 router.put("/:id", authJWT, async function (req, res, next) {
@@ -45,7 +51,13 @@ router.put("/:id", authJWT, async function (req, res, next) {
     res.json({ error: `No tag with id ${req.params.id}!` });
     return;
   }
-  res.json(await tagsRepo.updateTag(req.body, req.params.id));
+  if (req.user.role === "admin" || req.user.role === "author") {
+    res.json(await tagsRepo.updateTag(req.body, req.params.id));
+  } else {
+    res.status(403); //conflict
+    res.json({ error: "Unauthorized" });
+    return;
+  }
 });
 // Delete tag with id
 router.delete("/:id", authJWT, async function (req, res, next) {
@@ -58,9 +70,15 @@ router.delete("/:id", authJWT, async function (req, res, next) {
     }
   });
   if (isFound) {
-    tagsRepo.deleteTag(parseInt(req.params.id));
-    res.json({ message: `Tag with id ${req.params.id} has been deleted!` });
-    return;
+    if (req.user.role === "admin" || req.user.role === "author") {
+      tagsRepo.deleteTag(parseInt(req.params.id));
+      res.json({ message: `Tag with id ${req.params.id} has been deleted!` });
+      return;
+    } else {
+      res.status(403); //conflict
+      res.json({ error: "Unauthorized" });
+      return;
+    }
   }
   res.status(404);
   res.json({ error: `No tag with id ${req.params.id}!` });

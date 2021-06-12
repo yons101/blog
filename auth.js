@@ -10,6 +10,7 @@ module.exports = {
       if (error) {
         res.status(403);
         res.json({ error: "Unauthorized!" });
+        return;
       }
       req.user = user;
       next();

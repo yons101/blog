@@ -31,7 +31,13 @@ router.post("/", authJWT, async function (req, res, next) {
     }
   });
   if (isFound) {
-    res.json(await commentsRepo.addComment(req.body));
+    if (req.user.role === "admin" || req.user.role === "author") {
+      res.json(await commentsRepo.addComment(req.body));
+    } else {
+      res.status(403); //conflict
+      res.json({ error: "Unauthorized" });
+      return;
+    }
   }
   res.json({ error: `No article with id ${req.body.ArticleId}!` });
 });
@@ -50,7 +56,13 @@ router.put("/:id", authJWT, async function (req, res, next) {
     }
   });
   if (articleIsFound) {
-    res.json(await commentsRepo.updateComment(req.body, req.params.id));
+    if (req.user.role === "admin" || req.user.role === "author") {
+      res.json(await commentsRepo.updateComment(req.body, req.params.id));
+    } else {
+      res.status(403); //conflict
+      res.json({ error: "Unauthorized" });
+      return;
+    }
   }
   res.status(404);
   res.json({ error: `No article with id ${req.body.ArticleId}!` });
@@ -66,9 +78,17 @@ router.delete("/:id", authJWT, async function (req, res, next) {
     }
   });
   if (isFound) {
-    commentsRepo.deleteComment(parseInt(req.params.id));
-    res.json({ message: `Comment with id ${req.params.id} has been deleted!` });
-    return;
+    if (req.user.role === "admin" || req.user.role === "author") {
+      commentsRepo.deleteComment(parseInt(req.params.id));
+      res.json({
+        message: `Comment with id ${req.params.id} has been deleted!`,
+      });
+      return;
+    } else {
+      res.status(403); //conflict
+      res.json({ error: "Unauthorized" });
+      return;
+    }
   }
   res.status(404);
   res.json({ error: `No comment with id ${req.params.id}!` });
