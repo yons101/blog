@@ -72,7 +72,7 @@ export default function Login() {
       </Head>
 
       <div className="container d-flex justify-content-center ">
-        <form className="w-75 mt-10" onSubmit={login}>
+        <form className="w-75 mt-5" onSubmit={login}>
           <h1 className="text-center">Sign in</h1>
           <label htmlFor="inputUsername">Username/Email</label>
           <input

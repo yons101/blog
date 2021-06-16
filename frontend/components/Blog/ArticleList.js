@@ -30,15 +30,13 @@ const ArticleList = ({ articles }) => {
           );
         })}
       </div>
-      <div className="position-relative mt-5" style={{ height: "1px" }}>
+      <div className="d-flex justify-content-center mt-5">
         <ReactPaginate
           previousLabel={"Previous"}
           nextLabel={"Next"}
           pageCount={pageCount}
           onPageChange={handlePageClick}
-          containerClassName={
-            "pagination position-absolute top-50 start-50 translate-middle"
-          }
+          containerClassName={"pagination "}
           pageClassName={"page-item"}
           pageLinkClassName={"page-link"}
           activeClassName={"page-item active"}

@@ -76,7 +76,7 @@ export default function Login() {
       </Head>
 
       <div className="container d-flex justify-content-center ">
-        <form className="w-75 mt-10" onSubmit={signup}>
+        <form className="w-75 mt-5" onSubmit={signup}>
           <h1 className="text-center">Sign Up</h1>
           <label htmlFor="inputUsername">Username/Email</label>
           <input
