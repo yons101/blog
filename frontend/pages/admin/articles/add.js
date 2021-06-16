@@ -6,7 +6,7 @@ import faker from "faker";
 import { checkAuth } from "@utils/auth";
 
 export default function add() {
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState(0);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [success, setSuccess] = useState({ state: false, message: "" });
@@ -65,7 +65,7 @@ export default function add() {
         <title>Add an article</title>
       </Head>
       <Header />
-      {authorized && (
+      {authorized === 2 ? (
         <div className="container">
           <header className="mb-4">
             <h1 className="fw-bolder mb-1">Add an article</h1>
@@ -98,6 +98,13 @@ export default function add() {
               </button>
             </form>
           </section>
+        </div>
+      ) : (
+        <div
+          class="authorization-alert container d-flex justify-content-center alert alert-danger"
+          role="alert"
+        >
+          You are not authorized
         </div>
       )}
 

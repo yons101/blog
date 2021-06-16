@@ -5,7 +5,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { checkAuth } from "@utils/auth";
 
 export default function edit({ comment }) {
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState(0);
   const [content, setContent] = useState(comment.content);
   const [success, setSuccess] = useState({ state: false, message: "" });
   const [error, setError] = useState({ state: false, message: "" });
@@ -58,7 +58,7 @@ export default function edit({ comment }) {
         <title>Update comment</title>
       </Head>
       <Header />
-      {authorized && (
+      {authorized === 2 ? (
         <div className="container">
           <header className="mb-4">
             <h1 className="fw-bolder mb-1">Update comment</h1>
@@ -83,6 +83,13 @@ export default function edit({ comment }) {
               </button>
             </form>
           </section>
+        </div>
+      ) : (
+        <div
+          class="authorization-alert container d-flex justify-content-center alert alert-danger"
+          role="alert"
+        >
+          You are not authorized
         </div>
       )}
 

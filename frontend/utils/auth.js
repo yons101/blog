@@ -16,10 +16,11 @@ const checkAuth = async (setAuthorized) => {
     })
     .then((data) => {
       if (status === 200 && (data.role === "admin" || data.role === "author")) {
-        setAuthorized(true);
+        setAuthorized(2);
+      } else if (status === 200 && data.role === "guest") {
+        setAuthorized(1);
       } else {
-        setAuthorized(false);
-        window.location.href = "/logout";
+        setAuthorized(0);
       }
       localStorage.setItem("UserId", data.id);
     });

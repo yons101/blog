@@ -6,7 +6,7 @@ import ReactPaginate from "react-paginate";
 import { checkAuth } from "@utils/auth";
 
 export default function index() {
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState(0);
   const [users, setUsers] = useState([]);
   const [deleteAlert, setDeleteAlert] = useState({ show: false, id: "" });
   const [currentPage, setCurrentPage] = useState(0);
@@ -47,7 +47,7 @@ export default function index() {
         <title>All Users</title>
       </Head>
       <Header />
-      {authorized && (
+      {authorized === 2 ? (
         <div className="container">
           <header className="mb-4 d-flex justify-content-between align-items-center">
             <h1 className="fw-bolder mb-1">All Users</h1>
@@ -123,6 +123,13 @@ export default function index() {
               />
             </div>
           </section>
+        </div>
+      ) : (
+        <div
+          class="authorization-alert container d-flex justify-content-center alert alert-danger"
+          role="alert"
+        >
+          You are not authorized
         </div>
       )}
 
