@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Header from "@components/Header";
+
 import dayjs from "dayjs";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { checkAuth } from "@utils/auth";
@@ -61,7 +61,7 @@ export default function Article({ article, user, comments }) {
       <Head>
         <title>{article.title}</title>
       </Head>
-      <Header />
+
       <div className="container">
         <header className="mb-4">
           <h1 className="fw-bolder mb-1">{article.title}</h1>

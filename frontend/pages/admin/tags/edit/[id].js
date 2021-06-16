@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Header from "@components/Header";
+
 import SweetAlert from "react-bootstrap-sweetalert";
 import { checkAuth } from "@utils/auth";
 
@@ -56,7 +56,7 @@ export default function edit({ tag }) {
       <Head>
         <title>Update tag</title>
       </Head>
-      <Header />
+
       {authorized === 2 ? (
         <div className="container">
           <header className="mb-4">

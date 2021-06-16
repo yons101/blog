@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Head from "next/head";
-import Header from "@components/Header";
+
 import ArticleList from "@components/Blog/ArticleList";
 
 export default function Home({ articles }) {
@@ -12,7 +12,7 @@ export default function Home({ articles }) {
       <Head>
         <title>Blog</title>
       </Head>
-      <Header />
+
       <div className="container">
         <ArticleList articles={articles} />
       </div>

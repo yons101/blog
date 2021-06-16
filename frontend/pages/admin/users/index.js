@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Header from "@components/Header";
+
 import SweetAlert from "react-bootstrap-sweetalert";
 import ReactPaginate from "react-paginate";
 import { checkAuth } from "@utils/auth";
@@ -46,7 +46,7 @@ export default function index() {
       <Head>
         <title>All Users</title>
       </Head>
-      <Header />
+
       {authorized === 2 ? (
         <div className="container">
           <header className="mb-4 d-flex justify-content-between align-items-center">

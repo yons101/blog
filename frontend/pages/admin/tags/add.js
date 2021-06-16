@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Head from "next/head";
-import Header from "@components/Header";
+
 import { checkAuth } from "@utils/auth";
 
 import SweetAlert from "react-bootstrap-sweetalert";
@@ -55,7 +55,7 @@ export default function add() {
       <Head>
         <title>Add a tag</title>
       </Head>
-      <Header />
+
       {authorized === 2 ? (
         <div className="container">
           <header className="mb-4">

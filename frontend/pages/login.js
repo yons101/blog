@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import Header from "@components/Header";
+
 import SweetAlert from "react-bootstrap-sweetalert";
 
 export default function Login() {
@@ -70,7 +70,7 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
-      <Header />
+
       <div className="container d-flex justify-content-center ">
         <form className="w-75 mt-10" onSubmit={login}>
           <h1 className="text-center">Sign in</h1>
