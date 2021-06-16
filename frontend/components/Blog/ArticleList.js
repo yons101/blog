@@ -9,7 +9,7 @@ const ArticleList = ({ articles }) => {
             key={article.id}
             title={article.title}
             image={article.image}
-            url="#"
+            url={article.id}
           />
         );
       })}

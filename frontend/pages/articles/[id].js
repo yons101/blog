@@ -2,7 +2,7 @@ import Head from "next/head";
 import Header from "@components/Header";
 import dayjs from "dayjs";
 
-export default function Article({ article, user }) {
+export default function Article({ article, user, comments }) {
   return (
     <div>
       <Head>
@@ -32,6 +32,21 @@ export default function Article({ article, user }) {
         <section className="mt-3 mb-5">
           <p className="fs-5 mb-4">{article.content}</p>
         </section>
+        <section className="mt-3 mb-5">
+          <div className="fs-5 mb-4">
+            <h3 className="mb-4">Comments:</h3>
+            <ul>
+              {comments.map((comment) => (
+                <li key={comment.id} className="mt-2">
+                  {comment.content}{" "}
+                  <small>
+                    <em>Posted on {dayjs(comment.createdAt).toString()}</em>
+                  </small>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </div>
     </div>
   );
@@ -43,5 +58,7 @@ export async function getServerSideProps(context) {
   const article = await res.json();
   const res2 = await fetch(`http://localhost:3000/users/${article.UserId}`);
   const user = await res2.json();
-  return { props: { article, user } };
+  const res3 = await fetch(`http://localhost:3000/articles/${id}/comments`);
+  const comments = await res3.json();
+  return { props: { article, user, comments } };
 }
