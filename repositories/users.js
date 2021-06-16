@@ -5,14 +5,14 @@ module.exports = {
       return User.findOne({
         where: {
           email: user.username,
-          password: user.password,
+          // password: user.password,
         },
       });
     }
     return User.findOne({
       where: {
         username: user.username,
-        password: user.password,
+        // password: user.password,
       },
     });
   },

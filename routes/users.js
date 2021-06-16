@@ -3,22 +3,34 @@ const usersRepo = require("../repositories/users");
 const { authJWT } = require("../auth");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 // Login
 router.post("/login", async function (req, res, next) {
-  const login = await usersRepo.login(req.body);
+  const { username, password } = req.body;
+
+  const login = await usersRepo.login({ username });
+
   if (login) {
-    const accessToken = jwt.sign(
-      login.toJSON(),
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "24h" }
-    );
-    res.json({ accessToken });
-    return;
+    const validPassword = await bcrypt.compare(password, login.password);
+    if (validPassword) {
+      const accessToken = jwt.sign(
+        login.toJSON(),
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "24h" }
+      );
+      res.json({ accessToken });
+      return;
+    } else {
+      res.status(401);
+      res.json({ error: "Wrong password" });
+    }
+  } else {
+    res.status(401);
+    res.json({ error: "Wrong username or email" });
   }
-  res.status(401);
-  res.json({ error: "Wrong username or password" });
 });
+
 // signup
 router.post(["/", "/signup"], async function (req, res, next) {
   const users = await usersRepo.getAllUsers();
@@ -49,7 +61,14 @@ router.post(["/", "/signup"], async function (req, res, next) {
     res.json({ error: "Password is required" });
     return;
   }
-  const signup = await usersRepo.addUser(req.body);
+  const { username, email, password, role } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const signup = await usersRepo.addUser({
+    username,
+    email,
+    password: hashedPassword,
+    role,
+  });
   if (signup) {
     const accessToken = jwt.sign(
       signup.toJSON(),

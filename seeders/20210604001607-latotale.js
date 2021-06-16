@@ -1,8 +1,10 @@
 "use strict";
 const faker = require("faker");
+const bcrypt = require("bcryptjs");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const hashedPassword = await bcrypt.hash("123456", 10);
     try {
       const users = [];
       const articles = [];
@@ -14,7 +16,7 @@ module.exports = {
         users.push({
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          password: faker.internet.password(),
+          password: hashedPassword,
           role: i < 3 ? "admin" : i > 3 && i < 10 ? "author" : "guest",
           createdAt: date,
           updatedAt: date,
