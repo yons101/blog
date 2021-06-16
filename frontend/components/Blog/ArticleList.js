@@ -30,7 +30,7 @@ const ArticleList = ({ articles }) => {
           );
         })}
       </div>
-      <div className="position-relative mt-5">
+      <div className="position-relative mt-5" style={{ height: "1px" }}>
         <ReactPaginate
           previousLabel={"Previous"}
           nextLabel={"Next"}
