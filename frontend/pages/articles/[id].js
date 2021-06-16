@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "@components/Header";
 import dayjs from "dayjs";
 import SweetAlert from "react-bootstrap-sweetalert";
+import { checkAuth } from "@utils/auth";
 
 export default function Article({ article, user, comments }) {
+  const [authorized, setAuthorized] = useState(0);
   const [commentContent, setCommentContent] = useState("");
   const [success, setSuccess] = useState({ state: false, message: "" });
   const [error, setError] = useState({ state: false, message: "" });
+
+  useEffect(() => {
+    checkAuth(setAuthorized);
+  }, []);
 
   const addComment = async (e) => {
     let token = localStorage.getItem("token");
@@ -94,29 +100,34 @@ export default function Article({ article, user, comments }) {
             </ul>
           </div>
         </section>
-
-        <section className="mt-3 mb-5">
-          <div className="fs-5 mb-4">
-            <h3 className="mb-4">Add a comment:</h3>
-            <form>
-              <div className="form-group">
-                <textarea
-                  type="text"
-                  className="form-control"
-                  value={commentContent}
-                  onChange={(e) => setCommentContent(e.target.value)}
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="btn btn-primary mt-2"
-                onClick={addComment}
-              >
-                Post
-              </button>
-            </form>
-          </div>
-        </section>
+        {authorized > 0 ? (
+          <section className="mt-3 mb-5">
+            <div className="fs-5 mb-4">
+              <h3 className="mb-4">Add a comment:</h3>
+              <form>
+                <div className="form-group">
+                  <textarea
+                    type="text"
+                    className="form-control"
+                    value={commentContent}
+                    onChange={(e) => setCommentContent(e.target.value)}
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-primary mt-2"
+                  onClick={addComment}
+                >
+                  Post
+                </button>
+              </form>
+            </div>
+          </section>
+        ) : (
+          <h5 className="mb-4">
+            <a href="/login">Login to comment</a>
+          </h5>
+        )}
       </div>
       {success.state && (
         <SweetAlert success title="Success!" onConfirm={reset} timeout={2000}>
