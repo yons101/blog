@@ -39,7 +39,7 @@ router.post("/", authJWT, async function (req, res, next) {
       return;
     }
   }
-  res.json({ error: `No article with id ${req.body.ArticleId}!` });
+  res.status(404).json({ error: `No article with id ${req.body.ArticleId}!` });
 });
 // Update comment with id
 router.put("/:id", authJWT, async function (req, res, next) {

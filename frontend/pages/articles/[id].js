@@ -1,8 +1,55 @@
+import { useState } from "react";
 import Head from "next/head";
 import Header from "@components/Header";
 import dayjs from "dayjs";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 export default function Article({ article, user, comments }) {
+  const [commentContent, setCommentContent] = useState("");
+  const [success, setSuccess] = useState({ state: false, message: "" });
+  const [error, setError] = useState({ state: false, message: "" });
+
+  const addComment = async (e) => {
+    let token = localStorage.getItem("token");
+    let status;
+    e.preventDefault();
+    await fetch(`http://localhost:3000/comments`, {
+      method: "POST",
+      body: JSON.stringify({
+        content: commentContent,
+        ArticleId: article.id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        status = res.status;
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (status === 200) {
+          setSuccess({
+            state: true,
+            message: `Your comment has been posted!`,
+          });
+        } else {
+          setError({ state: true, message: data.error });
+        }
+      });
+  };
+
+  const reset = () => {
+    if (success.state) {
+      setCommentContent("");
+    }
+    setSuccess({ state: false, message: "" });
+    setError({ state: false, message: "" });
+    location.reload();
+  };
+
   return (
     <div>
       <Head>
@@ -47,7 +94,40 @@ export default function Article({ article, user, comments }) {
             </ul>
           </div>
         </section>
+
+        <section className="mt-3 mb-5">
+          <div className="fs-5 mb-4">
+            <h3 className="mb-4">Add a comment:</h3>
+            <form>
+              <div className="form-group">
+                <textarea
+                  type="text"
+                  className="form-control"
+                  value={commentContent}
+                  onChange={(e) => setCommentContent(e.target.value)}
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary mt-2"
+                onClick={addComment}
+              >
+                Post
+              </button>
+            </form>
+          </div>
+        </section>
       </div>
+      {success.state && (
+        <SweetAlert success title="Success!" onConfirm={reset} timeout={2000}>
+          {success.message}
+        </SweetAlert>
+      )}
+      {error.state && (
+        <SweetAlert error title="Error!" onConfirm={reset}>
+          {error.message}
+        </SweetAlert>
+      )}
     </div>
   );
 }
