@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
 import SweetAlert from "react-bootstrap-sweetalert";
 import { checkAuth } from "@utils/auth";
 
@@ -19,7 +18,6 @@ export default function edit({ article }) {
     let token = localStorage.getItem("token");
     let status;
     e.preventDefault();
-    console.log(title, content);
     await fetch(`http://localhost:3000/articles/${article.id}`, {
       method: "PUT",
       body: JSON.stringify({
@@ -41,8 +39,6 @@ export default function edit({ article }) {
             state: true,
             message: `Article with id ${data[0].id} has been updated`,
           });
-          // setTimeout(() => {
-          // },);
         } else {
           setError({ state: true, message: data.error });
         }

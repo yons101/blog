@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import Head from "next/head";
-
 import ArticleList from "@components/Blog/ArticleList";
 
 export default function Home() {

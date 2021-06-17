@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
 import SweetAlert from "react-bootstrap-sweetalert";
 import { checkAuth } from "@utils/auth";
 
@@ -19,7 +18,6 @@ export default function add() {
     let token = localStorage.getItem("token");
     let status;
     e.preventDefault();
-    console.log(username, email);
     await fetch(`http://localhost:3000/users`, {
       method: "POST",
       body: JSON.stringify({
@@ -38,7 +36,6 @@ export default function add() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         if (status === 200) {
           setSuccess({
             state: true,

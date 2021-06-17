@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
 import SweetAlert from "react-bootstrap-sweetalert";
 import faker from "faker";
 import { checkAuth } from "@utils/auth";
@@ -39,7 +38,6 @@ export default function add() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         if (status === 200) {
           setSuccess({
             state: true,

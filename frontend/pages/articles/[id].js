@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
 import dayjs from "dayjs";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { checkAuth } from "@utils/auth";
@@ -35,7 +34,6 @@ export default function Article({ article, user, comments }) {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         if (status === 200) {
           setSuccess({
             state: true,

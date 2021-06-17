@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
 import SweetAlert from "react-bootstrap-sweetalert";
 import ReactPaginate from "react-paginate";
 import { checkAuth } from "@utils/auth";
@@ -31,7 +30,6 @@ export default function index() {
       .then((response) => response.json())
       .then((data) => {
         fetchUsers();
-        console.log(data);
       });
   };
   const handlePageClick = ({ selected: selectedPage }) => {

@@ -1,8 +1,6 @@
 import { useState } from "react";
 import Head from "next/head";
-
 import { checkAuth } from "@utils/auth";
-
 import SweetAlert from "react-bootstrap-sweetalert";
 
 export default function add() {

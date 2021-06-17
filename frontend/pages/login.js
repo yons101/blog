@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-
 import SweetAlert from "react-bootstrap-sweetalert";
 
 export default function Login() {
@@ -42,7 +41,6 @@ export default function Login() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         if (status === 200) {
           localStorage.setItem("token", data.accessToken);
           setSuccess({
