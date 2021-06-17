@@ -38,7 +38,7 @@ router.post("/", authJWT, async function (req, res, next) {
   if (req.user.role === "admin" || req.user.role === "author") {
     res.json(await tagsRepo.addTag(req.body));
   } else {
-    res.status(403); //conflict
+    res.status(403);
     res.json({ error: "Unauthorized" });
     return;
   }
@@ -54,7 +54,7 @@ router.put("/:id", authJWT, async function (req, res, next) {
   if (req.user.role === "admin" || req.user.role === "author") {
     res.json(await tagsRepo.updateTag(req.body, req.params.id));
   } else {
-    res.status(403); //conflict
+    res.status(403);
     res.json({ error: "Unauthorized" });
     return;
   }
@@ -75,7 +75,7 @@ router.delete("/:id", authJWT, async function (req, res, next) {
       res.json({ message: `Tag with id ${req.params.id} has been deleted!` });
       return;
     } else {
-      res.status(403); //conflict
+      res.status(403);
       res.json({ error: "Unauthorized" });
       return;
     }

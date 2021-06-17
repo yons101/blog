@@ -54,7 +54,7 @@ router.put("/:id", authJWT, async function (req, res, next) {
     if (req.user.role === "admin" || req.user.role === "author") {
       res.json(await commentsRepo.updateComment(req.body, req.params.id));
     } else {
-      res.status(403); //conflict
+      res.status(403);
       res.json({ error: "Unauthorized" });
       return;
     }
@@ -80,7 +80,7 @@ router.delete("/:id", authJWT, async function (req, res, next) {
       });
       return;
     } else {
-      res.status(403); //conflict
+      res.status(403);
       res.json({ error: "Unauthorized" });
       return;
     }
