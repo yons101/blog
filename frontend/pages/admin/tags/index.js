@@ -7,17 +7,17 @@ import { checkAuth } from "@utils/auth";
 
 export default function index() {
   const [authorized, setAuthorized] = useState(0);
-  const [tags, setTagss] = useState([]);
+  const [tags, setTags] = useState([]);
   const [deleteAlert, setDeleteAlert] = useState({ show: false, id: "" });
   const [currentPage, setCurrentPage] = useState(0);
-  const fetchTagss = async () => {
+  const fetchTags = async () => {
     const res = await fetch(`http://localhost:3000/tags`);
     const tags = await res.json();
-    setTagss(tags);
+    setTags(tags);
   };
   useEffect(() => {
     checkAuth(setAuthorized);
-    fetchTagss();
+    fetchTags();
   }, []);
   const deleteTags = async (id) => {
     let token = localStorage.getItem("token");
@@ -30,7 +30,7 @@ export default function index() {
     })
       .then((response) => response.json())
       .then((data) => {
-        fetchTagss();
+        fetchTags();
       });
   };
   const handlePageClick = ({ selected: selectedPage }) => {
