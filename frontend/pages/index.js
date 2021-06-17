@@ -3,10 +3,7 @@ import Head from "next/head";
 
 import ArticleList from "@components/Blog/ArticleList";
 
-export default function Home({ articles }) {
-  useEffect(() => {
-    console.log(articles);
-  }, []);
+export default function Home() {
   return (
     <div>
       <Head>
@@ -14,15 +11,8 @@ export default function Home({ articles }) {
       </Head>
 
       <div className="container">
-        <ArticleList articles={articles} />
+        <ArticleList />
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const res = await fetch(`http://localhost:3000/articles/1/20`);
-  const articles = await res.json();
-
-  return { props: { articles } };
 }

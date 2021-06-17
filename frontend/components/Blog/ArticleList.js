@@ -2,8 +2,11 @@ import ArticleCard from "@components/Blog/ArticleCard";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-const ArticleList = ({ articles }) => {
+const ArticleList = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => fetchArticles(), []);
   const fetchArticles = async () => {
     const res = await fetch(`http://localhost:3000/articles`);
     const articles = await res.json();
