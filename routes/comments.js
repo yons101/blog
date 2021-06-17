@@ -31,13 +31,8 @@ router.post("/", authJWT, async function (req, res, next) {
     }
   });
   if (isFound) {
-    if (req.user.role === "admin" || req.user.role === "author") {
-      res.json(await commentsRepo.addComment(req.body));
-    } else {
-      res.status(403); //conflict
-      res.json({ error: "Unauthorized" });
-      return;
-    }
+    res.json(await commentsRepo.addComment(req.body));
+    return;
   }
   res.status(404).json({ error: `No article with id ${req.body.ArticleId}!` });
 });
